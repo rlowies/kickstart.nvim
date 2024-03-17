@@ -107,6 +107,9 @@ vim.opt.number = true
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
 
+vim.opt.autoindent = true
+vim.opt.smartindent = true
+
 -- Don't show the mode, since it's already in status line
 vim.opt.showmode = false
 
@@ -539,7 +542,7 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
+        clangd = {},
         -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
@@ -809,7 +812,16 @@ require('lazy').setup({
       -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
 
       ---@diagnostic disable-next-line: missing-fields
-      require('nvim-treesitter.configs').setup(opts)
+      require('nvim-treesitter.configs').setup {
+
+        parser_install_dir = '~/.config/nvim/parsers',
+        ensure_installed = { 'c' },
+        auto_install = true,
+        highlight = {
+          enable = true,
+        },
+      }
+      vim.opt.runtimepath:append '~/.config/nvim/parsers'
 
       -- There are additional nvim-treesitter modules that you can use to interact
       -- with nvim-treesitter. You should go explore a few and see what interests you:
@@ -819,7 +831,24 @@ require('lazy').setup({
       --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
     end,
   },
-
+  {
+    'nvim-neo-tree/neo-tree.nvim',
+    branch = 'v3.x',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
+      'MunifTanjim/nui.nvim',
+      -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+    },
+  },
+  {
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    opts = {}, -- this is equalent to setup({}) function
+  },
+  {
+    'sitiom/nvim-numbertoggle',
+  },
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
   -- put them in the right spots if you want.
