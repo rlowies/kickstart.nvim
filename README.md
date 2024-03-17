@@ -1,5 +1,13 @@
 # kickstart.nvim
 
+This Fork of kickstart is configured for C/C++
+
+It can ofcourse be used for more than just the one language but will need to be configured
+
+If you are getting C error and expect none,
+Set CMAKE_EXPORT_COMPILE_COMMANDS=1 in your CMakeLists.txt to generate the compile_commands.json that clangd relies on.
+
+
 ## Introduction
 
 A starting point for Neovim that is:
